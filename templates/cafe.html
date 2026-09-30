@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ cafe.title }}{% endblock %}
+{% block content %}
+<div class="container-fluid my_bg" style="padding-top:50px;">
+  <div class="container">
+    <div class="row" >
+      <!-- 標題內文照片 -->
+      <h1>{{ cafe.title }}</h1>
+      <p>{{ cafe.experience | linebreaks }}<br></p>
+      {% if cafe.picture %}
+      <img src="{{ cafe.picture.url }}"alt="..."><br>
+      {% else %}
+      <img src="" alt="..."><br>
+      {% endif %}
+      <div class="">
+        <br><br>
+      </div>
+      <hr><br><br>
+      <!-- 實用判斷 -->
+      <h6>實用資訊：</h6>
+      {% if wifi %}
+        {% if limit %}
+          {% if plugin %}
+          <p><b>有</b> 網路&nbsp<b>有</b>限時&nbsp<b>有</b>插座</p><p>
+          {% else %}
+          <p><b>有</b> 網路&nbsp<b>有</b>限時&nbsp<b>無</b>插座</p><p>
+          {% endif %}
+        {% else %}
+          {% if plugin %}
+          <p><b>有</b> 網路&nbsp<b>無</b>限時&nbsp<b>有</b>插座</p><p>
+          {% else %}
+          <p><b>有</b> 網路&nbsp<b>無</b>限時&nbsp<b>無</b>插座</p><p>
+          {% endif %}
+        {% endif %}
+      {% else %}
+        {% if limit %}
+          {% if plugin %}
+          <p><b>無</b> 網路&nbsp<b>有</b>限時&nbsp<b>有</b>插座</p><p>
+          {% else %}
+          <p><b>無</b> 網路&nbsp<b>有</b>限時&nbsp<b>無</b>插座</p><p>
+          {% endif %}
+        {% else %}
+          {% if plugin %}
+          <p><b>無</b> 網路&nbsp<b>無</b>限時&nbsp<b>有</b>插座</p><p>
+          {% else %}
+          <p><b>無</b> 網路&nbsp<b>無</b>限時&nbsp<b>無</b>插座</p><p>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+      <h6>平均價格：</h6>
+      <span><p>{{ cafe.price }}</p></span><br><br>
+      <h6>地址：</h6>
+      <p>{{ cafe.address }}</p><br><br>
+      {% if cafe.ins %}
+      <h6>Instagram/Threads/Blog：</h6>
+      <p>{{ cafe.ins }}</p><br><br>
+      {% else %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+.img_cafe {
+  width: 280px;
+  height: 280px;
+  object-fit: cover;
+}
+.container{
+   width: 65%;
+  overflow-wrap: break-word;
+}
+</style>
+{% endblock %}

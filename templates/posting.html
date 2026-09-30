@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Post My Flavor{% endblock %}
+{% block content %}
+<div class="container-fluid my_bg_post my_bg">
+    <div class="container shadow _post">
+      <div align="center" style="padding-top:50px; color:#594529;">
+        <h4>分享你的愛店吧！</h4>
+      </div>
+      <div class="my_form">
+        <form action="." method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <table class="form-table">
+            {{ cafe_post_form.as_table }}
+          </table>
+          <button class="btn btn-light my_btn" type="submit" name="button"><span>送出</span></button>
+        </form>
+      </div>
+    </div>
+</div>
+
+<style>
+  .my_bg {
+      background-image: linear-gradient(rgba(203, 198, 191, 0.9), rgba(203, 198, 191, 0.9)), url('{% static 'img/bg-log.png' %}');
+    }
+  .my_form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:20px 0 30px 20px;
+  }
+  .my_form input, select{
+    display:block;
+    height:35px;
+    width:580px;
+    margin:13px 0;
+    border:none;
+    &::placeholder{
+      -webkit-transform:translateY(0px);
+        transform:translateY(0px);
+      -webkit-transition:.5s;
+        transition:.5s;
+    }
+    &:hover,
+    &:focus,
+    &:active:focus{
+      color:black;
+      outline:none;
+      border-bottom:1px solid #ff5722;
+      &::placeholder{
+        color:#ff5722;
+        position:relative;
+        -webkit-transform:translateY(-20px);
+        transform:translateY(-20px);
+
+      }
+    }
+  }
+
+  .my_form textarea{
+    display:block;
+    width:580px;
+    margin:13px 0;
+    border:none;
+    &::placeholder{
+      -webkit-transform:translateY(0px);
+        transform:translateY(0px);
+      -webkit-transition:.5s;
+        transition:.5s;
+    }
+    &:hover,
+    &:focus,
+    &:active:focus{
+      color:black;
+      outline:none;
+      border-bottom:1px solid #ff5722;
+      &::placeholder{
+        color:#ff5722;
+        position:relative;
+        -webkit-transform:translateY(-20px);
+        transform:translateY(-20px);
+      }
+    }
+  }
+  .my_form input[type="checkbox"]{
+    display:block;
+    width:20px;
+    margin:13px 0;
+  }
+.my_btn{
+  cursor:pointer;
+  display: block;
+  float:left;
+  width:10%;
+  height:40px;
+  margin-top:10px;
+  border:none;
+  font-family: 'Open Sans', sans-serif;
+  text-transform:uppercase;
+  color:#fff;
+  -webkit-transition:.5s;
+  transition:.5s;
+  &:nth-of-type(1){
+    background:#827460;
+  }
+  &:nth-of-type(2){
+    background:#CBC6BF;
+  }
+  span{
+    position:absolute;
+    color: white;
+    display:inline;
+    margin:-10px;
+    text-align: center;
+    -webkit-transform:translateX(0);
+    transform:translateX(0);
+    -webkit-transition:.5s;
+    transition:.5s;
+  }
+  &:hover{
+    span{
+      -webkit-transform:translateX(10px);
+      transform:translateX(10px);
+      }
+     }
+   }
+</style>
+{% endblock %}

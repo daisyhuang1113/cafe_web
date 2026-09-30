@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+<!-- {% load static %} -->
+{% block title %}My Post{% endblock %}
+{% block content %}
+<div class="container-fluid my_bg">
+<div class="container">
+  <br>
+  <div class="row">
+    {% for cafe in my_posts %}
+      <div class="col-md-3 mb-4">
+        <div class="card" style="width: 18rem;">
+          <!-- 照片 -->
+          {% if cafe.picture %}
+          <img src="{{ cafe.picture.url }}" class="card-img-top" alt="...">
+          {% else %}
+          <img src="..." class="card-img-top" alt="...">
+          {% endif %}
+          <div class="card-body">
+              <!-- 店名 -->
+              <h5 class="card-title">{{ cafe.title }}</h5>
+              <!-- hashtgs -->
+              {% if cafe.wifi %}
+              <h8 class="card-subtitle mb-2 text-muted">#有wifi</h8>&nbsp
+              {% else %}
+              <h8 class="card-subtitle mb-2 text-muted">#無wifi</h8>&nbsp
+              {% endif %}
+              {% if cafe.limit %}
+              <h8 class="card-subtitle mb-2 text-muted">#有限時</h8>&nbsp
+              {% else %}
+              <h8 class="card-subtitle mb-2 text-muted">#無限時</h8>&nbsp
+              {% endif %}
+              {% if cafe.plugin %}
+              <h8 class="card-subtitle mb-2 text-muted">#有插座</h8><br>
+              {% else %}
+              <h8 class="card-subtitle mb-2 text-muted">#無插座</h8><br>
+              {% endif %}
+            <!-- 內文 -->
+            <p class="card-text">{{ cafe.experience | truncatechars:50 }}</p>
+            <!-- 文章連結 -->
+            <a href="{% url 'cafe-url' cafe.id %}" class="btn btn-primary">Go somewhere</a><hr>
+            <!-- 刪除與編輯 -->
+            <form class="" action="." method="post">
+              {% csrf_token %}
+              <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exam">
+                刪除
+              </button>
+              <a href="{% url 'revise-url' cafe.id %}" class="btn btn-outline-success">編輯</a>
+              <div class="modal fade" id="exam" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">刪除貼文</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      確定要刪除這則貼文？
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                      <input type="hidden" name="delete_post" id="delete_post" value="{{cafe.id}}">
+                      <button type="submit" class="btn btn-danger">刪除</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <!-- 刪除與編輯 -->
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+</div>
+{% endblock %}

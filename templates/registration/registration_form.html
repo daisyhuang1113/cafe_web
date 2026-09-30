@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+<div class="container-fluid my_bg_post">
+  <div class="container shadow">
+    <div align="center" style="padding-top:50px;">
+      <h4>帳號註冊</h4>
+    </div>
+
+    <form action="." method="POST" style="padding:20px 0 30px 30px">
+      {% csrf_token %}
+      <table>
+        {{ form.as_table }}
+      </table>
+      <button class="btn btn-light my_btn" type="submit" value="註冊">
+        <span>註冊</span>
+      </button>
+    </form>
+  </div>
+</div>
+<style>
+.container{
+    position:relative;
+    top:70px;
+    background:rgba(255, 255, 255, 0.7);
+    display:block;
+    margin-bottom:80px;
+    width:600px;
+    border-radius:13px;
+    overflow:hidden;
+    z-index:1;
+    justify-content: center;
+    align-items: center;
+}
+.shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input{
+    display:block;
+    height:40px;
+    width:90%;
+    background:rgba(255, 255, 255, 0.5);
+    margin:0 auto;
+    border:none;
+}
+    &:hover,
+    &:focus,
+    &:active:focus{
+      color:#ff5722;
+      outline:none;
+      border-bottom:1px solid #ff5722;
+      }
+    }
+  }
+
+.pwd{
+  position:relative;
+  z-index:1;
+  border-bottom:1px solid rgba(0,0,0,.1);
+  padding-left:20px;
+  font-family: 'Open Sans', sans-serif;
+  text-transform:uppercase;
+  color:#858585;
+  font-weight:lighter;
+  -webkit-transition:.5s;
+  transition:.5s;
+}
+.my_btn{
+  cursor:pointer;
+  margin:30px 0;
+  width:15%;
+  height:40px;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  border:none;
+  font-family: 'Open Sans', sans-serif;
+  text-transform:uppercase;
+  color:#fff;
+  -webkit-transition:.5s;
+  transition:.5s;
+  &:nth-of-type(1){
+    background:#827460;
+  }
+  &:nth-of-type(2){
+    background:#827460;
+}
+span{
+  position:absolute;
+  color: white;
+  display:inline;
+  margin:-10px;
+  text-align: center;
+  -webkit-transform:translateX(0);
+  transform:translateX(0);
+  -webkit-transition:.5s;
+  transition:.5s;
+}
+&:hover{
+  span{
+    -webkit-transform:translateX(10px);
+    transform:translateX(10px);
+    }
+   }
+ }
+</style>
+{% endblock %}

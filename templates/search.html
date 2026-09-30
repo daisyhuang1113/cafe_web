@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<div class="container-fluid my_bg">
+<div class="container">
+  <br>
+  <div class="row">
+    {% if matches %}
+    <h5 style="color: #594529; margin-top: 10px;"><p>以下{{nums}}間咖啡廳應該能符合您的需求！</p></h5>
+      {% for cafe in matches %}
+        <!-- 搜尋結果 -->
+        <div class="col-md-3 mb-4">
+          <div class="card" style="width: 18rem;">
+            <!-- 照片 -->
+            {% if cafe.picture %}
+            <img src="{{ cafe.picture.url }}" class="card-img-top" alt="...">
+            {% else %}
+            <img src="..." class="card-img-top" alt="...">
+            {% endif %}
+            <div class="card-body">
+                <!-- 店名 -->
+                <h5 class="card-title">{{ cafe.title }}</h5>
+                <!-- hashtgs -->
+                {% if cafe.wifi %}
+                <h8 class="card-subtitle mb-2 text-muted">#有wifi</h8>&nbsp
+                {% else %}
+                <h8 class="card-subtitle mb-2 text-muted">#無wifi</h8>&nbsp
+                {% endif %}
+                {% if cafe.limit %}
+                <h8 class="card-subtitle mb-2 text-muted">#有限時</h8>&nbsp
+                {% else %}
+                <h8 class="card-subtitle mb-2 text-muted">#無限時</h8>&nbsp
+                {% endif %}
+                {% if cafe.plugin %}
+                <h8 class="card-subtitle mb-2 text-muted">#有插座</h8><br>
+                {% else %}
+                <h8 class="card-subtitle mb-2 text-muted">#無插座</h8><br>
+                {% endif %}
+              <!-- 內文 -->
+              <p class="card-text">{{ cafe.experience | truncatechars:50 }}</p>
+              <!-- 文章連結 -->
+              <a href="{% url 'cafe-url' cafe.id %}" class="btn btn-primary">看內文</a><hr>
+              <!-- 收藏 -->
+              <form action="." method="post">
+                {% csrf_token %}
+                <!-- 有登入 -->
+                {% if username %}
+                  <input type="hidden" name="is_favorite" id="is_favorite" value="{{ cafe.id }}">
+                  {% if cafe.is_favorite == True %}
+                  <button class="btn btn-success" type="submit" align='right'>取消收藏</button>
+                  {% else %}
+                  <button class="btn btn-outline-success" type="submit" align="right">收藏</button>
+                  {% endif %}
+                <!-- 未登入 -->
+                {% else %}
+                <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exam">
+                  收藏
+                </button>
+                <div class="modal fade" id="exam" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">尚未登入</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        請先登入，登入即可收藏文章
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <input type="hidden" name="delete_post" id="delete_post" value="{{cafe.id}}">
+                        <a href="/login/" class="btn btn-danger">登入</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+              </form>
+              <!-- 收藏 -->
+            </div>
+          </div>
+        </div>
+        <!-- 搜尋結果 -->
+      {% endfor %}
+    {% else %}
+      <div class="container">
+        <h5 style="color: #594529; padding-top: 25%;" align="center"><p>抱歉，沒有符合您需求的資料</p></h5>
+      </div>
+    {% endif %}
+  </div>
+</div>
+</div>
+{% endblock %}

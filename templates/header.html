@@ -1,0 +1,87 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="sticky container-fluid">
+    <a class="navbar-brand" href="/">Pick Your Flavor!</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="/listing/" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">找咖啡</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/listing/">全部</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/search/match/">條件搜尋</a></li>
+          </ul>
+        </li>
+        {% if username %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="/search/" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">會員</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/posting/">貼文</a></li>
+            <li><a class="dropdown-item" href="/mypost/">個人貼文</a></li>
+            <li><a class="dropdown-item" href="/favorite/">收藏</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">{{username}}</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/logout/">登出</a></li>
+        {% else %}
+        <li class="nav-item"><a class="nav-link" href="/login/">登入</a></li>
+        <li class="nav-item"><a class="nav-link" href="/accounts/register/">註冊</a></li>
+        {% endif %}
+      </ul>
+      <form class="d-flex" action="/search/" method="post">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="搜尋店名／地址" aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<style>
+input{
+    display:block;
+    height:35px;
+    width:90%;
+    margin:0 auto;
+    border:none;
+    &::placeholder{
+      -webkit-transform:translateY(0px);
+        transform:translateY(0px);
+      -webkit-transition:.5s;
+        transition:.5s;
+      font-size: 13px;
+    }
+    &:hover,
+    &:focus,
+    &:active:focus{
+      color:#ff5722;
+      outline:none;
+      border-bottom:1px solid #ff5722;
+      &::placeholder{
+        color:#fff;
+        position:relative;
+        -webkit-transform:translateY(-20px);
+        transform:translateY(-20px);
+      }
+    }
+  }
+.btn{
+  height:34px;
+  font-size: 13px;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height:60px;
+  z-index: 1000;
+  background-color: #fff;
+  border-bottom: 0.2px solid #BDBABA;
+}
+.navbar-collapse{
+  background: #fff;
+  padding: 10px 5px 8px 10px;
+}
+</style>

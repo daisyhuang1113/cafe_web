@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Favorite Post{% endblock %}
+{% block content %}
+<div class="container-fluid my_bg">
+<div class="container">
+  <br>
+  <div class="row">
+    {% for cafe in fav_posts %}
+    <!-- 文章 -->
+      <div class="col-md-3 mb-4">
+        <div class="card" style="width: 18rem;">
+          <!-- 照片 -->
+          {% if cafe.posting.picture %}
+          <img src="{{ cafe.posting.picture.url }}" class="card-img-top" alt="...">
+          {% else %}
+          <img src="..." class="card-img-top" alt="...">
+          {% endif %}
+          <div class="card-body">
+              <!-- 店名 -->
+              <h5 class="card-title">{{ cafe.posting.title }}</h5>
+              <!-- hashtgs -->
+              {% if cafe.posting.wifi %}
+              <h8 class="card-subtitle mb-2 text-muted">#有wifi</h8>&nbsp
+              {% else %}
+              <h8 class="card-subtitle mb-2 text-muted">#無wifi</h8>&nbsp
+              {% endif %}
+              {% if cafe.posting.limit %}
+              <h8 class="card-subtitle mb-2 text-muted">#有限時</h8>&nbsp
+              {% else %}
+              <h8 class="card-subtitle mb-2 text-muted">#無限時</h8>&nbsp
+              {% endif %}
+              {% if cafe.posting.plugin %}
+              <h8 class="card-subtitle mb-2 text-muted">#有插座</h8><br>
+              {% else %}
+              <h8 class="card-subtitle mb-2 text-muted">#無插座</h8><br>
+              {% endif %}
+            <!-- 內文 -->
+            <p class="card-text">{{ cafe.posting.experience | truncatechars:50 }}</p>
+            <!-- 文章連結 -->
+            <a href="{% url 'cafe-url' cafe.posting.id %}" class="btn btn-primary">看內文</a><hr>
+            <form action="." method="post">
+              {% csrf_token %}
+              <input type="hidden" name="not_favorite" id="not_favorite" value="{{cafe.posting.id}}">
+              <button class="btn btn-success" type="submit" align='right'>取消收藏</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    <!-- 文章 -->
+    {% endfor %}
+  </div>
+</div>
+</div>
+{% endblock %}
